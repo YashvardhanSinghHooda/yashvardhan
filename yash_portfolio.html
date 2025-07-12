@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yashvardhan - Portfolio Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff10" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #a8edea;
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .about-visual {
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: perspective(1000px) rotateY(-15deg);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        /* Achievements Grid */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .achievement-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .achievement-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #a8edea;
+        }
+
+        .achievement-list {
+            list-style: none;
+        }
+
+        .achievement-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .achievement-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Goals Section */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .goal-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .goal-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            text-align: center;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .contact-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .section h2 {
+                font-size: 2.5rem;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+
+        /* Floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#goals">Goals</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="particles" id="particles"></div>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Yashvardhan Singh Hooda</h1>
+            <p>National-level Shooter | Sports Captain | NDA Aspirant | MUN Winner | Guitarist | Tech Enthusiast</p>
+            <a href="#about" class="cta-button">Discover My Journey</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm Yash, a Class 10 student with a passion for leadership, service, and creativity. As a national-level 10m air pistol shooter and Sports Captain of my school, I've learned the value of discipline, focus, and perseverance.</p>
+                    <br>
+                    <p>Inspired by my father, who serves in the Indian Air Force, I aim to follow in his footsteps and serve the country with pride through the National Defence Academy. My journey combines the precision of shooting, the creativity of technology, and the harmony of music.</p>
+                    <br>
+                    <p>When I'm not on the range or studying, you'll find me coding my JARVIS-like AI assistant or playing guitar, finding balance through music and rhythm.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="profile-card">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">🎯</div>
+                        <h3>Ready to Serve</h3>
+                        <p>Following my father's footsteps in the Indian Air Force</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="section">
+        <div class="container">
+            <h2>Latest Achievements</h2>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <span class="achievement-icon">🔫</span>
+                    <h3>Shooting Excellence</h3>
+                    <ul class="achievement-list">
+                        <li>National-level 10m Air Pistol Shooter</li>
+                        <li>🥉 3 District-level Medals</li>
+                        <li>🏅 Top 10 Shooters of Punjab</li>
+                        <li>🇮🇳 Top 50 Shooters in India</li>
+                    </ul>
+                </div>
+                <div class="achievement-card">
+                    <span class="achievement-icon">🧠</span>
+                    <h3>Academics & Tech</h3>
+                    <ul class="achievement-list">
+                        <li>Preparing for National Defence Academy</li>
+                        <li>Developing JARVIS-style AI assistant</li>
+                        <li>Technology & coding enthusiast</li>
+                        <li>Innovation-focused projects</li>
+                    </ul>
+                </div>
+                <div class="achievement-card">
+                    <span class="achievement-icon">🗣️</span>
+                    <h3>Leadership & Speaking</h3>
+                    <ul class="achievement-list">
+                        <li>🏆 3-time MUN Winner</li>
+                        <li>🥇 Sports Captain, SHCS</li>
+                        <li>Public speaking excellence</li>
+                        <li>Student leadership roles</li>
+                    </ul>
+                </div>
+                <div class="achievement-card">
+                    <span class="achievement-icon">🎸</span>
+                    <h3>Music & Creativity</h3>
+                    <ul class="achievement-list">
+                        <li>Passionate Guitarist</li>
+                        <li>Regular school performances</li>
+                        <li>Personal event appearances</li>
+                        <li>Music as balance & expression</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="goals" class="section">
+        <div class="container">
+            <h2>My Goals</h2>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <span class="goal-icon">🎖️</span>
+                    <h3>Military Service</h3>
+                    <p>Crack NDA and join the Indian Armed Forces to serve my nation</p>
+                </div>
+                <div class="goal-card">
+                    <span class="goal-icon">🏆</span>
+                    <h3>International Shooting</h3>
+                    <p>Represent India in national and international shooting competitions</p>
+                </div>
+                <div class="goal-card">
+                    <span class="goal-icon">🤖</span>
+                    <h3>AI Innovation</h3>
+                    <p>Build real-world AI tools and contribute to technological advancement</p>
+                </div>
+                <div class="goal-card">
+                    <span class="goal-icon">✨</span>
+                    <h3>Inspire Others</h3>
+                    <p>Motivate others to balance sports, academics, and creativity</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact section">
+        <div class="container">
+            <h2>Let's Connect</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9;">Ready to collaborate or learn more about my journey?</p>
+            <a href="https://instagram.com/yashvardhan_hooda" target="_blank" class="contact-button">
+                📱 Follow on Instagram
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Add hover effects to achievement cards
+        document.querySelectorAll('.achievement-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
